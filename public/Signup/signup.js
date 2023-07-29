@@ -9,7 +9,7 @@ async function signUp(event){
         }
         const response = await axios.post('http://localhost:3000/user/signup',obj);
         if(response.status === 201){
-          //window.location.href = "../Login/login.html";
+          window.location.href = "../Login/login.html";
           alert('Successfuly signed up');
           localStorage.setItem('username',obj.username);
         } else if(response.status === 200){
