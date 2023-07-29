@@ -4,7 +4,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+    origin:'*',
+    methods:["PUT","DELETE","POST","GET"],
+    credentials:true
+}));
+
 app.use(bodyParser.json({extended:false}));
 
 const User = require('./models/User');

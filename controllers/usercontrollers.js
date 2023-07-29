@@ -23,6 +23,10 @@ const signup = async(req,res,next)=>{
             await User.create({username,email,phonenumber,password:hash});
             res.status(201).json({message:'Succesfully created new user',success:true});
         });
+        const user = await User.findOne({where:{username:username}});
+        if(user){
+            res.status(200).json({message:'user already exist',success:false});
+        }
     } catch(error){
         console.log(JSON.stringify(error));
         res.status(500).json({message:error,success:false});
