@@ -63,7 +63,6 @@ const login = async(req,res,next)=>{
 
 const getuser = async(req,res,next)=>{
     try{
-        console.log('hi')
         const users = await User.findAll();
         res.status(200).json({allUsers:users,success:true})
     }catch(error){

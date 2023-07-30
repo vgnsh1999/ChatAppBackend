@@ -14,12 +14,19 @@ app.use(cors({
 app.use(bodyParser.json({extended:false}));
 
 const User = require('./models/User');
+const Chat = require('./models/Chat');
 
 const sequelize = require('./util/database');
 
+
+User.hasMany(Chat);
+Chat.belongsTo(User);
+
 const userRoutes = require('./routes/user');
+const chatRoutes = require('./routes/chat');
 
 app.use('/user',userRoutes);
+app.use('/message',chatRoutes);
 
 
 sequelize.sync().then((response)=>{
