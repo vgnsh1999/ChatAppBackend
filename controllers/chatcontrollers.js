@@ -9,7 +9,8 @@ const addMessage = async (req,res,next)=>{
         if(message === undefined || message.length === 0){
             return res.status(400).json({message:'Parameters are missing',success:false});
         }
-        const data = await Chat.create({message,userId:req.user.id}); 
+        const user = await User.findAll({where:{id:req.user.id}});
+        const data = await Chat.create({message,userId:req.user.id,username:user[0].username}); 
         res.status(201).json({allChats:data,success:true});
     } catch(error){
         console.log(error)
