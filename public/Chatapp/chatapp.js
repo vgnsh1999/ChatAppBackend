@@ -55,3 +55,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
         document.body.innerHTML = document.body.innerHTML + `<div style="color:red";>${error}</div>`
     }
 });
+
+setInterval(()=>{
+    window.location.reload()
+ }, 8000);
