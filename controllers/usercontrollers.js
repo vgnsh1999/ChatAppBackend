@@ -17,16 +17,12 @@ const signup = async(req,res,next)=>{
         if(isstringinvalid(username) || isstringinvalid(email) || isstringinvalid(phonenumber) ||isstringinvalid(password)){
             return res.status(400).json({message:'Bad parameters.Something is missing',success:false});
         }
-        const saltrounds = 10;
-        bcrypt.hash(password , saltrounds , async(err,hash)=>{
+            const saltrounds = 10;
+            bcrypt.hash(password , saltrounds , async(err,hash)=>{
             console.log(err);
             await User.create({username,email,phonenumber,password:hash});
             res.status(201).json({message:'Succesfully created new user',success:true});
         });
-        const user = await User.findOne({where:{username:username}});
-        if(user){
-            res.status(200).json({message:'user already exist',success:false});
-        }
     } catch(error){
         console.log(JSON.stringify(error));
         res.status(500).json({message:error,success:false});
@@ -65,8 +61,20 @@ const login = async(req,res,next)=>{
     }
 };
 
+const getuser = async(req,res,next)=>{
+    try{
+        console.log('hi')
+        const users = await User.findAll();
+        res.status(200).json({allUsers:users,success:true})
+    }catch(error){
+        console.log(JSON.stringify(error));
+        res.status(500).json({message:error,success:false});
+    }
+}
+
 module.exports = {
     signup,
     login,
+    getuser,
     generateAccessToken,
 };

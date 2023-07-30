@@ -7,14 +7,12 @@ async function signUp(event){
             phonenumber:event.target.phonenumber.value,
             password:event.target.password.value
         }
+        localStorage.setItem('email',obj.email);
         const response = await axios.post('http://localhost:3000/user/signup',obj);
         if(response.status === 201){
           window.location.href = "../Login/login.html";
           alert('Successfuly signed up');
-          localStorage.setItem('username',obj.username);
-        } else if(response.status === 200){
-            alert('User already exist try logging in');
-        }
+        } 
         else {
           throw new Error('Failed to login');
         }
