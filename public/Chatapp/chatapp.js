@@ -50,11 +50,14 @@ function showChatOnScreenFromLocalStorage(){
     console.log(messages[0])
     console.log(messages.length)
     //console.log(messages.shift());
-    messages.forEach(message =>{
-        const parentElement = document.getElementById('chats');
-        const childElement = `<tr id=${message.userId}><td>${message.username}: ${message.message}</td></tr>`
-        parentElement.innerHTML = parentElement.innerHTML + childElement;  
-    });
+
+    //retrieve from localstorage and display
+    // messages.forEach(message =>{
+    //     const parentElement = document.getElementById('chats');
+    //     const childElement = `<tr id=${message.userId}><td>${message.username}: ${message.message}</td></tr>`
+    //     parentElement.innerHTML = parentElement.innerHTML + childElement;  
+    // });
+    
     removeChatFromLocalStorage();
 }
 
@@ -80,7 +83,7 @@ function showChatOnScreen(obj){
 
 
 function displayUsersOnScreen(obj){
-        const parentElement = document.getElementById('chats');
+        const parentElement = document.getElementById('users');
         const childElement = `<tr id=${obj.id}><td>${obj.username} joined</td></tr>`
         parentElement.innerHTML = parentElement.innerHTML + childElement;   
 }
@@ -114,6 +117,19 @@ window.addEventListener("DOMContentLoaded",async()=>{
     }
 });
 
+window.addEventListener("DOMContentLoaded",async()=>{
+    try{
+            const token = localStorage.getItem('token');
+            const response = await axios.get('http://localhost:3000/message/get-message2?limit=10',{headers:{"Authorization":token}});
+            for(var i=0;i<response.data.allChats.length;i++){
+            showChatOnScreen(response.data.allChats[i]);
+        }
+    } catch(error){
+        console.log(error);
+        //document.body.innerHTML = document.body.innerHTML + '<h4>Something went wrong!</h4>';
+        //document.body.innerHTML = document.body.innerHTML + `<div style="color:red";>${error}</div>`
+    }
+});
 
 setInterval(()=>{
     window.location.reload()

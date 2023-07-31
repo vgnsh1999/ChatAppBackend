@@ -29,7 +29,19 @@ const getMessage = async (req,res,next)=>{
     }
 };
 
+const getMessage2 = async (req,res,next)=>{
+    try{
+        const limit = +req.query.limit;
+        const chats = await Chat.findAll({ limit: limit });
+        res.status(200).json({allChats:chats,success:true});
+    } catch(error){
+        console.log(JSON.stringify(error));
+        res.status(500).json({message:error,success:false});
+    }
+};
+
 module.exports = {
     addMessage,
-    getMessage
+    getMessage,
+    getMessage2
 }
