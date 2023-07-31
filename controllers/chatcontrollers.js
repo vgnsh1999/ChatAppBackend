@@ -10,7 +10,7 @@ const addMessage = async (req,res,next)=>{
             return res.status(400).json({message:'Parameters are missing',success:false});
         }
         const user = await User.findAll({where:{id:req.user.id}});
-        const data = await Chat.create({message,userId:req.user.id,username:user[0].username}); 
+        const data = await Chat.create({message,userId:req.user.id,username:user[0].username});
         res.status(201).json({allChats:data,success:true});
     } catch(error){
         console.log(error)
@@ -20,7 +20,8 @@ const addMessage = async (req,res,next)=>{
 
 const getMessage = async (req,res,next)=>{
     try{
-        const chats = await Chat.findAll();
+        const limit = +req.query.limit;
+        const chats = await Chat.findAll({ limit: limit, offset:limit ,where: { userId:req.user.id }});
         res.status(200).json({allChats:chats,success:true});
     } catch(error){
         console.log(JSON.stringify(error));
