@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+    <style>
+        body {
+          background-image: url('./whatsapp.jpg');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="p-3 mb-2 bg-success text-white">ChatApp-Groups</div>
+<div class="container d-flex justify-content-center align-items-center">
+  <form onsubmit="addGroup(event)">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">You can create your own groups!!</h5>
+                <div class="form-group">
+                    <p class="card-text">Create a group:</p>
+                    <!-- <label for="group">Create a group:</label> -->
+                    <input type="text" class="form-control" name="groupname" id="groupname" aria-describedby="emailHelp" placeholder="Group name" required>
+                  </div> <br>
+                  <input type="submit" class="btn btn-success" value="Create"> <br> <br>
+              </div>
+            </div>
+          </div>
+        <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Available groups:</h5>
+                <ul id="groups"></ul>
+              </div>
+            </div>
+          </div>
+    </div>
+  
+  <!-- <input type="button" class="btn btn-primary" value="Forgot Password?" id="forgot"> <br> <br> -->
+  <!-- <a href="../Signup/signup.html" class="link-success">New User? - Sign Up</a> -->
+ </form>
+</div>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-3BBFWr73Xrf8GRjO+0pl0cbVwESBvg3ovnuCXpoqOkC/mkt/hTkFtutUPrwRz8eLySYvy5v1daulkyUZYvH8jw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha512-3BBFWr73Xrf8GRjO+0pl0cbVwESBvg3ovnuCXpoqOkC/mkt/hTkFtutUPrwRz8eLySYvy5v1daulkyUZYvH8jw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="../Group/group.js"></script>
+</body>
+</html>

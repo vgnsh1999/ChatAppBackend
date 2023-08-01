@@ -8,7 +8,7 @@ async function login(event){
         const response = await axios.post('http://localhost:3000/user/login',obj);
         alert(response.data.message);
         localStorage.setItem('token',response.data.token);
-        window.location.href = "../Chatapp/chatapp.html";
+        window.location.href = "../Group/group.html";
     } catch(error){
         console.log(JSON.stringify(error));
         //document.body.innerHTML = document.body.innerHTML + '<h4>Something went wrong!</h4>';
