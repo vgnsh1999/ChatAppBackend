@@ -6,7 +6,7 @@ async function addMessage(event){
         };
         const token = localStorage.getItem('token');
         const id = localStorage.getItem('groupId');
-        const response = await axios.post(`http://localhost:3000/message/add-message/${id}`,obj,{headers:{"Authorization":token}});
+        const response = await axios.post(`http://54.172.199.83:3000/message/add-message/${id}`,obj,{headers:{"Authorization":token}});
         console.log(response.data.allChats);
         showChatOnScreen(response.data.allChats);
         //storeChatOnLocalStorage(response.data.allChats);
@@ -25,7 +25,7 @@ async function addMember(event){
         };
         const token = localStorage.getItem('token');
         const id = localStorage.getItem('groupId');
-        const response = await axios.post(`http://localhost:3000/member/add-member/${id}`,obj,{headers:{"Authorization":token}});
+        const response = await axios.post(`http://54.172.199.83:3000/member/add-member/${id}`,obj,{headers:{"Authorization":token}});
         console.log(response.data.allMembers);
         showMemberOnScreen(response.data.allMembers)
     } catch(error){
@@ -131,7 +131,7 @@ function showMemberOnScreen(obj){
 async function deleteMember(id){
     try{
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:3000/member/delete-member/${id}`,{headers:{"Authorization":token}});
+        await axios.delete(`http://54.172.199.83:3000/member/delete-member/${id}`,{headers:{"Authorization":token}});
         removeMemberFromScreen(id);
     } catch(error){
         console.log(error);
@@ -146,7 +146,7 @@ function removeMemberFromScreen(id){
 async function makeAdmin(id){
     try{
         const token = localStorage.getItem('token');
-        await axios.put(`http://localhost:3000/member/make-admin/${id}`,{headers:{"Authorization":token}});
+        await axios.put(`http://54.172.199.83:3000/member/make-admin/${id}`,{headers:{"Authorization":token}});
         removeAdminButton();
         displayOnGroupAdmins();
     } catch(error){
@@ -163,7 +163,7 @@ async function displayOnGroupAdmins(){
     try{
             const token = localStorage.getItem('token');
             const id = localStorage.getItem('groupId');
-            const response = await axios.get(`http://localhost:3000/member/get-member`,{headers:{"Authorization":token}});
+            const response = await axios.get(`http://54.172.199.83:3000/member/get-member`,{headers:{"Authorization":token}});
             for(var i=0;i<response.data.allMembers.length;i++){
                 if(response.data.allMembers[i].isAdmin === true){
                     displayAdminsOnScreen(response.data.allMembers[i]);
@@ -179,7 +179,7 @@ async function displayOnGroupAdmins(){
 window.addEventListener("DOMContentLoaded",async()=>{
     try{
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/user/get-user',{headers:{"Authorization":token}});
+        const response = await axios.get('http://54.172.199.83:3000/user/get-user',{headers:{"Authorization":token}});
         console.log(response.data);
         for(var i=0;i<response.data.allUsers.length;i++){
         displayUsersOnScreen(response.data.allUsers[i]);
@@ -196,7 +196,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
 //     try{
 //             const token = localStorage.getItem('token');
 //             const id = localStorage.getItem('groupId');
-//             const response = await axios.get(`http://localhost:3000/message/get-message/:${id}?limit=10`,{headers:{"Authorization":token}});
+//             const response = await axios.get(`http://54.172.199.83:3000/message/get-message/:${id}?limit=10`,{headers:{"Authorization":token}});
 //             for(var i=0;i<response.data.allChats.length;i++){
 //             showChatOnScreen(response.data.allChats[i]);
 //         }
@@ -211,7 +211,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
     try{
             const token = localStorage.getItem('token');
             const id = localStorage.getItem('groupId');
-            const response = await axios.get(`http://localhost:3000/message/get-message/${id}`,{headers:{"Authorization":token}});
+            const response = await axios.get(`http://54.172.199.83:3000/message/get-message/${id}`,{headers:{"Authorization":token}});
             for(var i=0;i<response.data.allChats.length;i++){
             showChatOnScreen(response.data.allChats[i]);
         }
@@ -226,7 +226,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
     try{
             const token = localStorage.getItem('token');
             const id = localStorage.getItem('groupId');
-            const response = await axios.get(`http://localhost:3000/member/get-member/${id}`,{headers:{"Authorization":token}});
+            const response = await axios.get(`http://54.172.199.83:3000/member/get-member/${id}`,{headers:{"Authorization":token}});
             for(var i=0;i<response.data.allMembers.length;i++){
             showMemberOnScreen(response.data.allMembers[i]);
         }
@@ -241,7 +241,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
     try{
             const token = localStorage.getItem('token');
             const id = localStorage.getItem('groupId');
-            const response = await axios.get(`http://localhost:3000/member/get-member`,{headers:{"Authorization":token}});
+            const response = await axios.get(`http://54.172.199.83:3000/member/get-member`,{headers:{"Authorization":token}});
             for(var i=0;i<response.data.allMembers.length;i++){
                 if(response.data.allMembers[i].isAdmin === true){
                     removeAdminButton()

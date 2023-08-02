@@ -5,7 +5,7 @@ async function addGroup(event){
             groupname:event.target.groupname.value
         };
         const token = localStorage.getItem('token');
-        const response = await axios.post('http://localhost:3000/group/add-group',obj,{headers:{"Authorization":token}});
+        const response = await axios.post('http://54.172.199.83:3000/group/add-group',obj,{headers:{"Authorization":token}});
         // console.log(response.data.allChats);
         showGroupOnScreen(response.data.allGroups);
     } catch(error){
@@ -32,7 +32,7 @@ function joinedgroup(id){
 window.addEventListener("DOMContentLoaded",async()=>{
     try{
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/group/get-group',{headers:{"Authorization":token}});
+        const response = await axios.get('http://54.172.199.83:3000/group/get-group',{headers:{"Authorization":token}});
         console.log(response.data);
         for(var i=0;i<response.data.allGroups.length;i++){
         showGroupOnScreen(response.data.allGroups[i]);
