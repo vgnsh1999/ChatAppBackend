@@ -255,6 +255,6 @@ window.addEventListener("DOMContentLoaded",async()=>{
     }
 });
 
-// setInterval(()=>{
-//     window.location.reload()
-//  }, 8000);
+setInterval(()=>{
+    window.location.reload()
+ }, 8000);
