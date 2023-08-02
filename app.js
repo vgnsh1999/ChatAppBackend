@@ -1,10 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+require('dotenv').config();
 
+
+const accessLogStream = fs.createWriteStream(
+    path.join(__dirname,'access.log'),
+    {flags:'a'}
+    );
 const cors = require('cors');
 
 const app = express();
-
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(morgan('combined',{stream:accessLogStream}));
 app.use(cors({
     origin:'*',
     methods:["PUT","DELETE","POST","GET"],
@@ -42,8 +53,13 @@ app.use('/message',chatRoutes);
 app.use('/group',groupRoutes);
 app.use('/member',memberRoutes);
 
+app.use((req,res)=>{
+    console.log('url',req.url);
+    res.sendFile(path.join(__dirname,`public/${req.url}`));
+})
+
 
 sequelize.sync().then((response)=>{
     console.log(response);
-    app.listen(3000);
+    app.listen(process.env.PORT||3000);
 }).catch(error=>console.log(error));
