@@ -34,6 +34,14 @@
 </head>
 <body>
     <div class="p-3 mb-2 bg-success text-white">ChatApp</div>
+    <form onsubmit="addMember(event)">
+        <div class="form-group">
+            <input type="text"  name="member" id="member" aria-describedby="emailHelp" placeholder="Add member" required>
+            <input type="submit" class="btn btn-success btn-sm" value="Add member">
+        </div>
+    </form>
+    <h5>Group Admins</h5>
+    <ul id="groupadmins"></ul>
     <table class="center" id="users">
     <table class="center" id="chats">
         <!-- <tr>

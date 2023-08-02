@@ -31,7 +31,8 @@ function joinedgroup(id){
 
 window.addEventListener("DOMContentLoaded",async()=>{
     try{
-        const response = await axios.get('http://localhost:3000/group/get-group');
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:3000/group/get-group',{headers:{"Authorization":token}});
         console.log(response.data);
         for(var i=0;i<response.data.allGroups.length;i++){
         showGroupOnScreen(response.data.allGroups[i]);

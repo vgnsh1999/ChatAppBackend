@@ -17,6 +17,24 @@ async function addMessage(event){
     }
 }
 
+async function addMember(event){
+    try{
+        event.preventDefault();
+        const obj = {
+            member:event.target.member.value
+        };
+        const token = localStorage.getItem('token');
+        const id = localStorage.getItem('groupId');
+        const response = await axios.post(`http://localhost:3000/member/add-member/${id}`,obj,{headers:{"Authorization":token}});
+        console.log(response.data.allMembers);
+        showMemberOnScreen(response.data.allMembers)
+    } catch(error){
+        console.log(error);
+        //document.body.innerHTML = document.body.innerHTML + '<h4>Something went wrong!</h4>';
+        document.body.innerHTML = document.body.innerHTML + `<div style="color:red";>${error}</div>`
+    }
+}
+
 //---------------------------LOCALSTORAGE-------------------------------------
 //to store data in localstorage
 // function storeChatOnLocalStorage(obj){
@@ -86,8 +104,77 @@ function showChatOnScreen(obj){
 function displayUsersOnScreen(obj){
         const parentElement = document.getElementById('users');
         const childElement = `<tr id=${obj.id}><td>${obj.username} joined</td></tr>`
-        parentElement.innerHTML = parentElement.innerHTML + childElement;   
+        parentElement.innerHTML = parentElement.innerHTML + childElement;  
+        
+        const parentElement1 = document.getElementById('groupadmins');
+        const childElement1 = `<li id=${obj.id}>${obj.username}</li>`
+        parentElement1.innerHTML = parentElement1.innerHTML + childElement1;
 }
+
+function displayAdminsOnScreen(obj){
+    const parentElement1 = document.getElementById('groupadmins');
+    const childElement1 = `<li id=${obj.id}>${obj.membername}</li>`
+    parentElement1.innerHTML = parentElement1.innerHTML + childElement1;
+}
+
+function showMemberOnScreen(obj){
+    const parentElement = document.getElementById('users');
+    const childElement = `<tr id=${obj.id}><td>${obj.membername} joined
+    <button class="btn btn-danger btn-sm" onclick="deleteMember(${obj.id})">Delete Member</button>
+    <button id="admin" class="btn btn-secondary btn-sm" onclick="makeAdmin(${obj.id})">Make Admin</button>
+    <p id="adminmessage"></p>
+    </td>
+    </tr>`
+    parentElement.innerHTML = parentElement.innerHTML + childElement;   
+}
+
+async function deleteMember(id){
+    try{
+        const token = localStorage.getItem('token');
+        await axios.delete(`http://localhost:3000/member/delete-member/${id}`,{headers:{"Authorization":token}});
+        removeMemberFromScreen(id);
+    } catch(error){
+        console.log(error);
+        document.body.innerHTML = document.body.innerHTML + '<h4>Something went wrong!</h4>'
+    }
+}
+
+function removeMemberFromScreen(id){
+    document.getElementById(id).remove();
+}
+
+async function makeAdmin(id){
+    try{
+        const token = localStorage.getItem('token');
+        await axios.put(`http://localhost:3000/member/make-admin/${id}`,{headers:{"Authorization":token}});
+        removeAdminButton();
+        displayOnGroupAdmins();
+    } catch(error){
+        console.log(error);
+        document.body.innerHTML = document.body.innerHTML + '<h4>Something went wrong!</h4>'
+    }
+}
+
+function removeAdminButton(){
+                document.getElementById('admin').remove();
+}
+
+async function displayOnGroupAdmins(){
+    try{
+            const token = localStorage.getItem('token');
+            const id = localStorage.getItem('groupId');
+            const response = await axios.get(`http://localhost:3000/member/get-member`,{headers:{"Authorization":token}});
+            for(var i=0;i<response.data.allMembers.length;i++){
+                if(response.data.allMembers[i].isAdmin === true){
+                    displayAdminsOnScreen(response.data.allMembers[i]);
+                }
+            }
+    } catch(error){
+        console.log(error);
+        //document.body.innerHTML = document.body.innerHTML + '<h4>Something went wrong!</h4>';
+        //document.body.innerHTML = document.body.innerHTML + `<div style="color:red";>${error}</div>`
+    }
+};
 
 window.addEventListener("DOMContentLoaded",async()=>{
     try{
@@ -135,6 +222,39 @@ window.addEventListener("DOMContentLoaded",async()=>{
     }
 });
 
-setInterval(()=>{
-    window.location.reload()
- }, 8000);
+window.addEventListener("DOMContentLoaded",async()=>{
+    try{
+            const token = localStorage.getItem('token');
+            const id = localStorage.getItem('groupId');
+            const response = await axios.get(`http://localhost:3000/member/get-member/${id}`,{headers:{"Authorization":token}});
+            for(var i=0;i<response.data.allMembers.length;i++){
+            showMemberOnScreen(response.data.allMembers[i]);
+        }
+    } catch(error){
+        console.log(error);
+        //document.body.innerHTML = document.body.innerHTML + '<h4>Something went wrong!</h4>';
+        //document.body.innerHTML = document.body.innerHTML + `<div style="color:red";>${error}</div>`
+    }
+});
+
+window.addEventListener("DOMContentLoaded",async()=>{
+    try{
+            const token = localStorage.getItem('token');
+            const id = localStorage.getItem('groupId');
+            const response = await axios.get(`http://localhost:3000/member/get-member`,{headers:{"Authorization":token}});
+            for(var i=0;i<response.data.allMembers.length;i++){
+                if(response.data.allMembers[i].isAdmin === true){
+                    removeAdminButton()
+                    displayAdminsOnScreen(response.data.allMembers[i]);
+                }
+            }
+    } catch(error){
+        console.log(error);
+        //document.body.innerHTML = document.body.innerHTML + '<h4>Something went wrong!</h4>';
+        //document.body.innerHTML = document.body.innerHTML + `<div style="color:red";>${error}</div>`
+    }
+});
+
+// setInterval(()=>{
+//     window.location.reload()
+//  }, 8000);

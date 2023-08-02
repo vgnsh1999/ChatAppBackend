@@ -63,6 +63,7 @@ const login = async(req,res,next)=>{
 
 const getuser = async(req,res,next)=>{
     try{
+        //const users = await User.findAll({where:{id:req.user.id}});
         const users = await User.findAll();
         res.status(200).json({allUsers:users,success:true})
     }catch(error){

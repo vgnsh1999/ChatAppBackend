@@ -8,6 +8,6 @@ const groupController = require('../controllers/groupcontrollers');
 
 router.post('/add-group',userauthentication.authenticate,groupController.addGroup);
 
-router.get('/get-group',groupController.getGroup);
+router.get('/get-group',userauthentication.authenticate,groupController.getGroup);
 
 module.exports = router;
